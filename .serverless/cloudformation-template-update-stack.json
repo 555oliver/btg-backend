@@ -92,7 +92,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-2-6e5f13f5-96d3",
-          "S3Key": "serverless/backend-btg-angular/prod/1730910048734-2024-11-06T16:20:48.734Z/backend-btg-angular.zip"
+          "S3Key": "serverless/backend-btg-angular/prod/1730914087920-2024-11-06T17:28:07.920Z/backend-btg-angular.zip"
         },
         "Handler": "dist/lambda.handler",
         "Runtime": "nodejs20.x",
@@ -121,14 +121,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionTVcLy5uJgYSPvPkE90cCmqvrLEz4mHrAMqJWJu9Ke7U": {
+    "MainLambdaVersionZhMjMScg07UhMjntvspKVqxCqmJkheZH9AVwOWjt4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "cpDZSQof8jbBIkGaKXoXEi6u6mtiCOF+9GkBz3riEjE="
+        "CodeSha256": "rPq6imxDmAPFJq3mbp2kb/V5QA5rEedkQXeZ9f0A0wI="
       }
     },
     "ApiGatewayRestApi": {
@@ -183,6 +183,30 @@
         }
       }
     },
+    "ApiGatewayResourceApiV1UsuariosProxyVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiV1Usuarios"
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiV1UsuariosLogin": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiV1Usuarios"
+        },
+        "PathPart": "login",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
     "ApiGatewayResourceApiV1Fondos": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -195,19 +219,43 @@
         }
       }
     },
-    "ApiGatewayResourceApiV1Transacciones": {
+    "ApiGatewayResourceApiV1FondosProxyVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiV1Fondos"
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiV1Transaciones": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
           "Ref": "ApiGatewayResourceApiV1"
         },
-        "PathPart": "transacciones",
+        "PathPart": "transaciones",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodApiV1UsuariosOptions": {
+    "ApiGatewayResourceApiV1TransacionesProxyVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiV1Transaciones"
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodApiV1UsuariosProxyVarOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -245,14 +293,14 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiV1Usuarios"
+          "Ref": "ApiGatewayResourceApiV1UsuariosProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodApiV1FondosOptions": {
+    "ApiGatewayMethodApiV1FondosProxyVarOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -290,14 +338,14 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiV1Fondos"
+          "Ref": "ApiGatewayResourceApiV1FondosProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodApiV1TransaccionesOptions": {
+    "ApiGatewayMethodApiV1UsuariosLoginOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -335,20 +383,65 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiV1Transacciones"
+          "Ref": "ApiGatewayResourceApiV1UsuariosLogin"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodApiV1UsuariosAny": {
+    "ApiGatewayMethodApiV1TransacionesProxyVarOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiV1TransacionesProxyVar"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodApiV1UsuariosProxyVarAny": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "ANY",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiV1Usuarios"
+          "Ref": "ApiGatewayResourceApiV1UsuariosProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -388,13 +481,13 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodApiV1FondosAny": {
+    "ApiGatewayMethodApiV1FondosProxyVarAny": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "ANY",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiV1Fondos"
+          "Ref": "ApiGatewayResourceApiV1FondosProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -434,13 +527,13 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodApiV1TransaccionesAny": {
+    "ApiGatewayMethodApiV1UsuariosLoginAny": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "ANY",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiV1Transacciones"
+          "Ref": "ApiGatewayResourceApiV1UsuariosLogin"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -480,7 +573,53 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1730910044701": {
+    "ApiGatewayMethodApiV1TransacionesProxyVarAny": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiV1TransacionesProxyVar"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "MainLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "MainLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1730914084554": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -489,12 +628,14 @@
         "StageName": "prod"
       },
       "DependsOn": [
-        "ApiGatewayMethodApiV1UsuariosOptions",
-        "ApiGatewayMethodApiV1FondosOptions",
-        "ApiGatewayMethodApiV1TransaccionesOptions",
-        "ApiGatewayMethodApiV1UsuariosAny",
-        "ApiGatewayMethodApiV1FondosAny",
-        "ApiGatewayMethodApiV1TransaccionesAny"
+        "ApiGatewayMethodApiV1UsuariosProxyVarOptions",
+        "ApiGatewayMethodApiV1FondosProxyVarOptions",
+        "ApiGatewayMethodApiV1UsuariosLoginOptions",
+        "ApiGatewayMethodApiV1TransacionesProxyVarOptions",
+        "ApiGatewayMethodApiV1UsuariosProxyVarAny",
+        "ApiGatewayMethodApiV1FondosProxyVarAny",
+        "ApiGatewayMethodApiV1UsuariosLoginAny",
+        "ApiGatewayMethodApiV1TransacionesProxyVarAny"
       ]
     },
     "MainLambdaPermissionApiGateway": {
@@ -545,7 +686,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionTVcLy5uJgYSPvPkE90cCmqvrLEz4mHrAMqJWJu9Ke7U"
+        "Ref": "MainLambdaVersionZhMjMScg07UhMjntvspKVqxCqmJkheZH9AVwOWjt4"
       },
       "Export": {
         "Name": "sls-backend-btg-angular-prod-MainLambdaFunctionQualifiedArn"

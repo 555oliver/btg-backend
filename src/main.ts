@@ -12,7 +12,7 @@ async function bootstrap() {
     }),
   );
   app.enableCors({
-    origin: '*', // Cambia esto por la URL de tu frontend (Angular)
+    origin: 'http://btg-frontend-oliver.s3-website.us-east-2.amazonaws.com', // Cambia esto por la URL de tu frontend (Angular)
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
   await app.listen(process.env.PORT ?? 'PORT');
