@@ -1,0 +1,53 @@
+service: backend-btg-angular
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  webpack:
+    includeModules: false
+
+package:
+  exclude:
+    - node_modules/**
+    - .git/**
+    - tests/**
+    - docs/**
+  
+provider:
+  name: aws
+  runtime: nodejs20.x
+  apiGateway:
+    minimumCompressionSize: 1024
+  architecture: arm64
+  region: us-east-2
+  memorySize: 1024
+  logRetentionInDays: 1
+  timeout: 30
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+
+
+functions:
+  main:
+    handler: dist/lambda.handler
+    layers:
+      - arn:aws:lambda:us-east-2:992382560327:layer:nodeModulesLayer:2
+    events:
+      - http:
+          path: api/v1/usuarios   # Rutas de usuarios
+          method: any
+          cors: true
+      - http:
+          path: api/v1/fondos    # Rutas de fondos
+          method: any
+          cors: true
+      - http:
+          path: api/v1/transacciones # Rutas de transacciones
+          method: any
+          cors: true
+
+
+
