@@ -31,7 +31,7 @@
               "artifactsS3KeyDirname": "serverless/backend-btg-angular/prod/code-artifacts",
               "deploymentBucket": "serverless-framework-deployments-us-east-2-6e5f13f5-96d3",
               "artifact": "C:\\Users\\user\\Desktop\\BTG challanger\\btg-backend\\.serverless\\backend-btg-angular.zip",
-              "artifactDirectoryName": "serverless/backend-btg-angular/prod/1730914087920-2024-11-06T17:28:07.920Z"
+              "artifactDirectoryName": "serverless/backend-btg-angular/prod/1731044553838-2024-11-08T05:42:33.838Z"
             },
             "provider": {
               "name": "aws",
@@ -143,7 +143,7 @@
                     "Properties": {
                       "Code": {
                         "S3Bucket": "serverless-framework-deployments-us-east-2-6e5f13f5-96d3",
-                        "S3Key": "serverless/backend-btg-angular/prod/1730914087920-2024-11-06T17:28:07.920Z/backend-btg-angular.zip"
+                        "S3Key": "serverless/backend-btg-angular/prod/1731044553838-2024-11-08T05:42:33.838Z/backend-btg-angular.zip"
                       },
                       "Handler": "dist/lambda.handler",
                       "Runtime": "nodejs20.x",
@@ -222,23 +222,14 @@
                       }
                     }
                   },
-                  "ApiGatewayResourceApiV1Usuarios": {
+                  "ApiGatewayResourceProxyVar": {
                     "Type": "AWS::ApiGateway::Resource",
                     "Properties": {
                       "ParentId": {
-                        "Ref": "ApiGatewayResourceApiV1"
-                      },
-                      "PathPart": "usuarios",
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayResourceApiV1UsuariosProxyVar": {
-                    "Type": "AWS::ApiGateway::Resource",
-                    "Properties": {
-                      "ParentId": {
-                        "Ref": "ApiGatewayResourceApiV1Usuarios"
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
                       },
                       "PathPart": "{proxy+}",
                       "RestApiId": {
@@ -246,253 +237,59 @@
                       }
                     }
                   },
-                  "ApiGatewayResourceApiV1UsuariosLogin": {
-                    "Type": "AWS::ApiGateway::Resource",
+                  "ApiGatewayMethodApiV1Any": {
+                    "Type": "AWS::ApiGateway::Method",
                     "Properties": {
-                      "ParentId": {
-                        "Ref": "ApiGatewayResourceApiV1Usuarios"
-                      },
-                      "PathPart": "login",
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayResourceApiV1Fondos": {
-                    "Type": "AWS::ApiGateway::Resource",
-                    "Properties": {
-                      "ParentId": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
                         "Ref": "ApiGatewayResourceApiV1"
                       },
-                      "PathPart": "fondos",
                       "RestApiId": {
                         "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayResourceApiV1FondosProxyVar": {
-                    "Type": "AWS::ApiGateway::Resource",
-                    "Properties": {
-                      "ParentId": {
-                        "Ref": "ApiGatewayResourceApiV1Fondos"
                       },
-                      "PathPart": "{proxy+}",
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayResourceApiV1Transaciones": {
-                    "Type": "AWS::ApiGateway::Resource",
-                    "Properties": {
-                      "ParentId": {
-                        "Ref": "ApiGatewayResourceApiV1"
-                      },
-                      "PathPart": "transaciones",
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayResourceApiV1TransacionesProxyVar": {
-                    "Type": "AWS::ApiGateway::Resource",
-                    "Properties": {
-                      "ParentId": {
-                        "Ref": "ApiGatewayResourceApiV1Transaciones"
-                      },
-                      "PathPart": "{proxy+}",
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayMethodApiV1UsuariosProxyVarOptions": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
+                      "ApiKeyRequired": "<REDACTED>",
                       "AuthorizationType": "NONE",
-                      "HttpMethod": "OPTIONS",
-                      "MethodResponses": [
-                        {
-                          "StatusCode": "200",
-                          "ResponseParameters": {
-                            "method.response.header.Access-Control-Allow-Origin": true,
-                            "method.response.header.Access-Control-Allow-Headers": true,
-                            "method.response.header.Access-Control-Allow-Methods": true
-                          },
-                          "ResponseModels": {}
-                        }
-                      ],
-                      "RequestParameters": {},
                       "Integration": {
-                        "Type": "MOCK",
-                        "RequestTemplates": {
-                          "application/json": "{statusCode:200}"
-                        },
-                        "ContentHandling": "CONVERT_TO_TEXT",
-                        "IntegrationResponses": [
-                          {
-                            "StatusCode": "200",
-                            "ResponseParameters": {
-                              "method.response.header.Access-Control-Allow-Origin": "'*'",
-                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                            },
-                            "ResponseTemplates": {
-                              "application/json": ""
-                            }
-                          }
-                        ]
-                      },
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1UsuariosProxyVar"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayMethodApiV1FondosProxyVarOptions": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
-                      "AuthorizationType": "NONE",
-                      "HttpMethod": "OPTIONS",
-                      "MethodResponses": [
-                        {
-                          "StatusCode": "200",
-                          "ResponseParameters": {
-                            "method.response.header.Access-Control-Allow-Origin": true,
-                            "method.response.header.Access-Control-Allow-Headers": true,
-                            "method.response.header.Access-Control-Allow-Methods": true
-                          },
-                          "ResponseModels": {}
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
                         }
-                      ],
-                      "RequestParameters": {},
-                      "Integration": {
-                        "Type": "MOCK",
-                        "RequestTemplates": {
-                          "application/json": "{statusCode:200}"
-                        },
-                        "ContentHandling": "CONVERT_TO_TEXT",
-                        "IntegrationResponses": [
-                          {
-                            "StatusCode": "200",
-                            "ResponseParameters": {
-                              "method.response.header.Access-Control-Allow-Origin": "'*'",
-                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                            },
-                            "ResponseTemplates": {
-                              "application/json": ""
-                            }
-                          }
-                        ]
                       },
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1FondosProxyVar"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
                   },
-                  "ApiGatewayMethodApiV1UsuariosLoginOptions": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
-                      "AuthorizationType": "NONE",
-                      "HttpMethod": "OPTIONS",
-                      "MethodResponses": [
-                        {
-                          "StatusCode": "200",
-                          "ResponseParameters": {
-                            "method.response.header.Access-Control-Allow-Origin": true,
-                            "method.response.header.Access-Control-Allow-Headers": true,
-                            "method.response.header.Access-Control-Allow-Methods": true
-                          },
-                          "ResponseModels": {}
-                        }
-                      ],
-                      "RequestParameters": {},
-                      "Integration": {
-                        "Type": "MOCK",
-                        "RequestTemplates": {
-                          "application/json": "{statusCode:200}"
-                        },
-                        "ContentHandling": "CONVERT_TO_TEXT",
-                        "IntegrationResponses": [
-                          {
-                            "StatusCode": "200",
-                            "ResponseParameters": {
-                              "method.response.header.Access-Control-Allow-Origin": "'*'",
-                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                            },
-                            "ResponseTemplates": {
-                              "application/json": ""
-                            }
-                          }
-                        ]
-                      },
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1UsuariosLogin"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayMethodApiV1TransacionesProxyVarOptions": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
-                      "AuthorizationType": "NONE",
-                      "HttpMethod": "OPTIONS",
-                      "MethodResponses": [
-                        {
-                          "StatusCode": "200",
-                          "ResponseParameters": {
-                            "method.response.header.Access-Control-Allow-Origin": true,
-                            "method.response.header.Access-Control-Allow-Headers": true,
-                            "method.response.header.Access-Control-Allow-Methods": true
-                          },
-                          "ResponseModels": {}
-                        }
-                      ],
-                      "RequestParameters": {},
-                      "Integration": {
-                        "Type": "MOCK",
-                        "RequestTemplates": {
-                          "application/json": "{statusCode:200}"
-                        },
-                        "ContentHandling": "CONVERT_TO_TEXT",
-                        "IntegrationResponses": [
-                          {
-                            "StatusCode": "200",
-                            "ResponseParameters": {
-                              "method.response.header.Access-Control-Allow-Origin": "'*'",
-                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                            },
-                            "ResponseTemplates": {
-                              "application/json": ""
-                            }
-                          }
-                        ]
-                      },
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1TransacionesProxyVar"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      }
-                    }
-                  },
-                  "ApiGatewayMethodApiV1UsuariosProxyVarAny": {
+                  "ApiGatewayMethodProxyVarAny": {
                     "Type": "AWS::ApiGateway::Method",
                     "Properties": {
                       "HttpMethod": "ANY",
                       "RequestParameters": {},
                       "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1UsuariosProxyVar"
+                        "Ref": "ApiGatewayResourceProxyVar"
                       },
                       "RestApiId": {
                         "Ref": "ApiGatewayRestApi"
@@ -532,145 +329,7 @@
                       "MainLambdaPermissionApiGateway"
                     ]
                   },
-                  "ApiGatewayMethodApiV1FondosProxyVarAny": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
-                      "HttpMethod": "ANY",
-                      "RequestParameters": {},
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1FondosProxyVar"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      },
-                      "ApiKeyRequired": "<REDACTED>",
-                      "AuthorizationType": "NONE",
-                      "Integration": {
-                        "IntegrationHttpMethod": "POST",
-                        "Type": "AWS_PROXY",
-                        "Uri": {
-                          "Fn::Join": [
-                            "",
-                            [
-                              "arn:",
-                              {
-                                "Ref": "AWS::Partition"
-                              },
-                              ":apigateway:",
-                              {
-                                "Ref": "AWS::Region"
-                              },
-                              ":lambda:path/2015-03-31/functions/",
-                              {
-                                "Fn::GetAtt": [
-                                  "MainLambdaFunction",
-                                  "Arn"
-                                ]
-                              },
-                              "/invocations"
-                            ]
-                          ]
-                        }
-                      },
-                      "MethodResponses": []
-                    },
-                    "DependsOn": [
-                      "MainLambdaPermissionApiGateway"
-                    ]
-                  },
-                  "ApiGatewayMethodApiV1UsuariosLoginAny": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
-                      "HttpMethod": "ANY",
-                      "RequestParameters": {},
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1UsuariosLogin"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      },
-                      "ApiKeyRequired": "<REDACTED>",
-                      "AuthorizationType": "NONE",
-                      "Integration": {
-                        "IntegrationHttpMethod": "POST",
-                        "Type": "AWS_PROXY",
-                        "Uri": {
-                          "Fn::Join": [
-                            "",
-                            [
-                              "arn:",
-                              {
-                                "Ref": "AWS::Partition"
-                              },
-                              ":apigateway:",
-                              {
-                                "Ref": "AWS::Region"
-                              },
-                              ":lambda:path/2015-03-31/functions/",
-                              {
-                                "Fn::GetAtt": [
-                                  "MainLambdaFunction",
-                                  "Arn"
-                                ]
-                              },
-                              "/invocations"
-                            ]
-                          ]
-                        }
-                      },
-                      "MethodResponses": []
-                    },
-                    "DependsOn": [
-                      "MainLambdaPermissionApiGateway"
-                    ]
-                  },
-                  "ApiGatewayMethodApiV1TransacionesProxyVarAny": {
-                    "Type": "AWS::ApiGateway::Method",
-                    "Properties": {
-                      "HttpMethod": "ANY",
-                      "RequestParameters": {},
-                      "ResourceId": {
-                        "Ref": "ApiGatewayResourceApiV1TransacionesProxyVar"
-                      },
-                      "RestApiId": {
-                        "Ref": "ApiGatewayRestApi"
-                      },
-                      "ApiKeyRequired": "<REDACTED>",
-                      "AuthorizationType": "NONE",
-                      "Integration": {
-                        "IntegrationHttpMethod": "POST",
-                        "Type": "AWS_PROXY",
-                        "Uri": {
-                          "Fn::Join": [
-                            "",
-                            [
-                              "arn:",
-                              {
-                                "Ref": "AWS::Partition"
-                              },
-                              ":apigateway:",
-                              {
-                                "Ref": "AWS::Region"
-                              },
-                              ":lambda:path/2015-03-31/functions/",
-                              {
-                                "Fn::GetAtt": [
-                                  "MainLambdaFunction",
-                                  "Arn"
-                                ]
-                              },
-                              "/invocations"
-                            ]
-                          ]
-                        }
-                      },
-                      "MethodResponses": []
-                    },
-                    "DependsOn": [
-                      "MainLambdaPermissionApiGateway"
-                    ]
-                  },
-                  "ApiGatewayDeployment1730914084554": {
+                  "ApiGatewayDeployment1731044550669": {
                     "Type": "AWS::ApiGateway::Deployment",
                     "Properties": {
                       "RestApiId": {
@@ -679,14 +338,8 @@
                       "StageName": "prod"
                     },
                     "DependsOn": [
-                      "ApiGatewayMethodApiV1UsuariosProxyVarOptions",
-                      "ApiGatewayMethodApiV1FondosProxyVarOptions",
-                      "ApiGatewayMethodApiV1UsuariosLoginOptions",
-                      "ApiGatewayMethodApiV1TransacionesProxyVarOptions",
-                      "ApiGatewayMethodApiV1UsuariosProxyVarAny",
-                      "ApiGatewayMethodApiV1FondosProxyVarAny",
-                      "ApiGatewayMethodApiV1UsuariosLoginAny",
-                      "ApiGatewayMethodApiV1TransacionesProxyVarAny"
+                      "ApiGatewayMethodApiV1Any",
+                      "ApiGatewayMethodProxyVarAny"
                     ]
                   },
                   "MainLambdaPermissionApiGateway": {
@@ -782,97 +435,15 @@
                 "events": [
                   {
                     "http": {
-                      "path": "api/v1/usuarios/{proxy+}",
                       "method": "any",
-                      "cors": {
-                        "origin": "*",
-                        "methods": [
-                          "OPTIONS",
-                          "ANY"
-                        ],
-                        "headers": [
-                          "Content-Type",
-                          "X-Amz-Date",
-                          "Authorization",
-                          "X-Api-Key",
-                          "X-Amz-Security-Token",
-                          "X-Amz-User-Agent",
-                          "X-Amzn-Trace-Id"
-                        ],
-                        "allowCredentials": "<REDACTED>"
-                      },
+                      "path": "api/v1",
                       "integration": "AWS_PROXY"
                     }
                   },
                   {
                     "http": {
-                      "path": "api/v1/fondos/{proxy+}",
                       "method": "any",
-                      "cors": {
-                        "origin": "*",
-                        "methods": [
-                          "OPTIONS",
-                          "ANY"
-                        ],
-                        "headers": [
-                          "Content-Type",
-                          "X-Amz-Date",
-                          "Authorization",
-                          "X-Api-Key",
-                          "X-Amz-Security-Token",
-                          "X-Amz-User-Agent",
-                          "X-Amzn-Trace-Id"
-                        ],
-                        "allowCredentials": "<REDACTED>"
-                      },
-                      "integration": "AWS_PROXY"
-                    }
-                  },
-                  {
-                    "http": {
-                      "path": "api/v1/usuarios/login",
-                      "method": "any",
-                      "cors": {
-                        "origin": "*",
-                        "methods": [
-                          "OPTIONS",
-                          "ANY"
-                        ],
-                        "headers": [
-                          "Content-Type",
-                          "X-Amz-Date",
-                          "Authorization",
-                          "X-Api-Key",
-                          "X-Amz-Security-Token",
-                          "X-Amz-User-Agent",
-                          "X-Amzn-Trace-Id"
-                        ],
-                        "allowCredentials": "<REDACTED>"
-                      },
-                      "integration": "AWS_PROXY"
-                    }
-                  },
-                  {
-                    "http": {
-                      "path": "api/v1/transaciones/{proxy+}",
-                      "method": "any",
-                      "cors": {
-                        "origin": "*",
-                        "methods": [
-                          "OPTIONS",
-                          "ANY"
-                        ],
-                        "headers": [
-                          "Content-Type",
-                          "X-Amz-Date",
-                          "Authorization",
-                          "X-Api-Key",
-                          "X-Amz-Security-Token",
-                          "X-Amz-User-Agent",
-                          "X-Amzn-Trace-Id"
-                        ],
-                        "allowCredentials": "<REDACTED>"
-                      },
+                      "path": "{proxy+}",
                       "integration": "AWS_PROXY"
                     }
                   }
@@ -930,7 +501,7 @@
         "artifactsS3KeyDirname": "serverless/backend-btg-angular/prod/code-artifacts",
         "deploymentBucket": "serverless-framework-deployments-us-east-2-6e5f13f5-96d3",
         "artifact": "C:\\Users\\user\\Desktop\\BTG challanger\\btg-backend\\.serverless\\backend-btg-angular.zip",
-        "artifactDirectoryName": "serverless/backend-btg-angular/prod/1730914087920-2024-11-06T17:28:07.920Z"
+        "artifactDirectoryName": "serverless/backend-btg-angular/prod/1731044553838-2024-11-08T05:42:33.838Z"
       },
       "provider": {
         "name": "aws",
@@ -1042,7 +613,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-2-6e5f13f5-96d3",
-                  "S3Key": "serverless/backend-btg-angular/prod/1730914087920-2024-11-06T17:28:07.920Z/backend-btg-angular.zip"
+                  "S3Key": "serverless/backend-btg-angular/prod/1731044553838-2024-11-08T05:42:33.838Z/backend-btg-angular.zip"
                 },
                 "Handler": "dist/lambda.handler",
                 "Runtime": "nodejs20.x",
@@ -1121,23 +692,14 @@
                 }
               }
             },
-            "ApiGatewayResourceApiV1Usuarios": {
+            "ApiGatewayResourceProxyVar": {
               "Type": "AWS::ApiGateway::Resource",
               "Properties": {
                 "ParentId": {
-                  "Ref": "ApiGatewayResourceApiV1"
-                },
-                "PathPart": "usuarios",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayResourceApiV1UsuariosProxyVar": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
-                  "Ref": "ApiGatewayResourceApiV1Usuarios"
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
                 },
                 "PathPart": "{proxy+}",
                 "RestApiId": {
@@ -1145,253 +707,59 @@
                 }
               }
             },
-            "ApiGatewayResourceApiV1UsuariosLogin": {
-              "Type": "AWS::ApiGateway::Resource",
+            "ApiGatewayMethodApiV1Any": {
+              "Type": "AWS::ApiGateway::Method",
               "Properties": {
-                "ParentId": {
-                  "Ref": "ApiGatewayResourceApiV1Usuarios"
-                },
-                "PathPart": "login",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayResourceApiV1Fondos": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
+                "HttpMethod": "ANY",
+                "RequestParameters": {},
+                "ResourceId": {
                   "Ref": "ApiGatewayResourceApiV1"
                 },
-                "PathPart": "fondos",
                 "RestApiId": {
                   "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayResourceApiV1FondosProxyVar": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
-                  "Ref": "ApiGatewayResourceApiV1Fondos"
                 },
-                "PathPart": "{proxy+}",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayResourceApiV1Transaciones": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
-                  "Ref": "ApiGatewayResourceApiV1"
-                },
-                "PathPart": "transaciones",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayResourceApiV1TransacionesProxyVar": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
-                  "Ref": "ApiGatewayResourceApiV1Transaciones"
-                },
-                "PathPart": "{proxy+}",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayMethodApiV1UsuariosProxyVarOptions": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
+                "ApiKeyRequired": "<REDACTED>",
                 "AuthorizationType": "NONE",
-                "HttpMethod": "OPTIONS",
-                "MethodResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": true,
-                      "method.response.header.Access-Control-Allow-Headers": true,
-                      "method.response.header.Access-Control-Allow-Methods": true
-                    },
-                    "ResponseModels": {}
-                  }
-                ],
-                "RequestParameters": {},
                 "Integration": {
-                  "Type": "MOCK",
-                  "RequestTemplates": {
-                    "application/json": "{statusCode:200}"
-                  },
-                  "ContentHandling": "CONVERT_TO_TEXT",
-                  "IntegrationResponses": [
-                    {
-                      "StatusCode": "200",
-                      "ResponseParameters": {
-                        "method.response.header.Access-Control-Allow-Origin": "'*'",
-                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                      },
-                      "ResponseTemplates": {
-                        "application/json": ""
-                      }
-                    }
-                  ]
-                },
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1UsuariosProxyVar"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayMethodApiV1FondosProxyVarOptions": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "AuthorizationType": "NONE",
-                "HttpMethod": "OPTIONS",
-                "MethodResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": true,
-                      "method.response.header.Access-Control-Allow-Headers": true,
-                      "method.response.header.Access-Control-Allow-Methods": true
-                    },
-                    "ResponseModels": {}
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "MainLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
                   }
-                ],
-                "RequestParameters": {},
-                "Integration": {
-                  "Type": "MOCK",
-                  "RequestTemplates": {
-                    "application/json": "{statusCode:200}"
-                  },
-                  "ContentHandling": "CONVERT_TO_TEXT",
-                  "IntegrationResponses": [
-                    {
-                      "StatusCode": "200",
-                      "ResponseParameters": {
-                        "method.response.header.Access-Control-Allow-Origin": "'*'",
-                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                      },
-                      "ResponseTemplates": {
-                        "application/json": ""
-                      }
-                    }
-                  ]
                 },
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1FondosProxyVar"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "MainLambdaPermissionApiGateway"
+              ]
             },
-            "ApiGatewayMethodApiV1UsuariosLoginOptions": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "AuthorizationType": "NONE",
-                "HttpMethod": "OPTIONS",
-                "MethodResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": true,
-                      "method.response.header.Access-Control-Allow-Headers": true,
-                      "method.response.header.Access-Control-Allow-Methods": true
-                    },
-                    "ResponseModels": {}
-                  }
-                ],
-                "RequestParameters": {},
-                "Integration": {
-                  "Type": "MOCK",
-                  "RequestTemplates": {
-                    "application/json": "{statusCode:200}"
-                  },
-                  "ContentHandling": "CONVERT_TO_TEXT",
-                  "IntegrationResponses": [
-                    {
-                      "StatusCode": "200",
-                      "ResponseParameters": {
-                        "method.response.header.Access-Control-Allow-Origin": "'*'",
-                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                      },
-                      "ResponseTemplates": {
-                        "application/json": ""
-                      }
-                    }
-                  ]
-                },
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1UsuariosLogin"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayMethodApiV1TransacionesProxyVarOptions": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "AuthorizationType": "NONE",
-                "HttpMethod": "OPTIONS",
-                "MethodResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": true,
-                      "method.response.header.Access-Control-Allow-Headers": true,
-                      "method.response.header.Access-Control-Allow-Methods": true
-                    },
-                    "ResponseModels": {}
-                  }
-                ],
-                "RequestParameters": {},
-                "Integration": {
-                  "Type": "MOCK",
-                  "RequestTemplates": {
-                    "application/json": "{statusCode:200}"
-                  },
-                  "ContentHandling": "CONVERT_TO_TEXT",
-                  "IntegrationResponses": [
-                    {
-                      "StatusCode": "200",
-                      "ResponseParameters": {
-                        "method.response.header.Access-Control-Allow-Origin": "'*'",
-                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                      },
-                      "ResponseTemplates": {
-                        "application/json": ""
-                      }
-                    }
-                  ]
-                },
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1TransacionesProxyVar"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayMethodApiV1UsuariosProxyVarAny": {
+            "ApiGatewayMethodProxyVarAny": {
               "Type": "AWS::ApiGateway::Method",
               "Properties": {
                 "HttpMethod": "ANY",
                 "RequestParameters": {},
                 "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1UsuariosProxyVar"
+                  "Ref": "ApiGatewayResourceProxyVar"
                 },
                 "RestApiId": {
                   "Ref": "ApiGatewayRestApi"
@@ -1431,145 +799,7 @@
                 "MainLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayMethodApiV1FondosProxyVarAny": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "HttpMethod": "ANY",
-                "RequestParameters": {},
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1FondosProxyVar"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                },
-                "ApiKeyRequired": "<REDACTED>",
-                "AuthorizationType": "NONE",
-                "Integration": {
-                  "IntegrationHttpMethod": "POST",
-                  "Type": "AWS_PROXY",
-                  "Uri": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition"
-                        },
-                        ":apigateway:",
-                        {
-                          "Ref": "AWS::Region"
-                        },
-                        ":lambda:path/2015-03-31/functions/",
-                        {
-                          "Fn::GetAtt": [
-                            "MainLambdaFunction",
-                            "Arn"
-                          ]
-                        },
-                        "/invocations"
-                      ]
-                    ]
-                  }
-                },
-                "MethodResponses": []
-              },
-              "DependsOn": [
-                "MainLambdaPermissionApiGateway"
-              ]
-            },
-            "ApiGatewayMethodApiV1UsuariosLoginAny": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "HttpMethod": "ANY",
-                "RequestParameters": {},
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1UsuariosLogin"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                },
-                "ApiKeyRequired": "<REDACTED>",
-                "AuthorizationType": "NONE",
-                "Integration": {
-                  "IntegrationHttpMethod": "POST",
-                  "Type": "AWS_PROXY",
-                  "Uri": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition"
-                        },
-                        ":apigateway:",
-                        {
-                          "Ref": "AWS::Region"
-                        },
-                        ":lambda:path/2015-03-31/functions/",
-                        {
-                          "Fn::GetAtt": [
-                            "MainLambdaFunction",
-                            "Arn"
-                          ]
-                        },
-                        "/invocations"
-                      ]
-                    ]
-                  }
-                },
-                "MethodResponses": []
-              },
-              "DependsOn": [
-                "MainLambdaPermissionApiGateway"
-              ]
-            },
-            "ApiGatewayMethodApiV1TransacionesProxyVarAny": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "HttpMethod": "ANY",
-                "RequestParameters": {},
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiV1TransacionesProxyVar"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                },
-                "ApiKeyRequired": "<REDACTED>",
-                "AuthorizationType": "NONE",
-                "Integration": {
-                  "IntegrationHttpMethod": "POST",
-                  "Type": "AWS_PROXY",
-                  "Uri": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition"
-                        },
-                        ":apigateway:",
-                        {
-                          "Ref": "AWS::Region"
-                        },
-                        ":lambda:path/2015-03-31/functions/",
-                        {
-                          "Fn::GetAtt": [
-                            "MainLambdaFunction",
-                            "Arn"
-                          ]
-                        },
-                        "/invocations"
-                      ]
-                    ]
-                  }
-                },
-                "MethodResponses": []
-              },
-              "DependsOn": [
-                "MainLambdaPermissionApiGateway"
-              ]
-            },
-            "ApiGatewayDeployment1730914084554": {
+            "ApiGatewayDeployment1731044550669": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -1578,14 +808,8 @@
                 "StageName": "prod"
               },
               "DependsOn": [
-                "ApiGatewayMethodApiV1UsuariosProxyVarOptions",
-                "ApiGatewayMethodApiV1FondosProxyVarOptions",
-                "ApiGatewayMethodApiV1UsuariosLoginOptions",
-                "ApiGatewayMethodApiV1TransacionesProxyVarOptions",
-                "ApiGatewayMethodApiV1UsuariosProxyVarAny",
-                "ApiGatewayMethodApiV1FondosProxyVarAny",
-                "ApiGatewayMethodApiV1UsuariosLoginAny",
-                "ApiGatewayMethodApiV1TransacionesProxyVarAny"
+                "ApiGatewayMethodApiV1Any",
+                "ApiGatewayMethodProxyVarAny"
               ]
             },
             "MainLambdaPermissionApiGateway": {
@@ -1681,97 +905,15 @@
           "events": [
             {
               "http": {
-                "path": "api/v1/usuarios/{proxy+}",
                 "method": "any",
-                "cors": {
-                  "origin": "*",
-                  "methods": [
-                    "OPTIONS",
-                    "ANY"
-                  ],
-                  "headers": [
-                    "Content-Type",
-                    "X-Amz-Date",
-                    "Authorization",
-                    "X-Api-Key",
-                    "X-Amz-Security-Token",
-                    "X-Amz-User-Agent",
-                    "X-Amzn-Trace-Id"
-                  ],
-                  "allowCredentials": "<REDACTED>"
-                },
+                "path": "api/v1",
                 "integration": "AWS_PROXY"
               }
             },
             {
               "http": {
-                "path": "api/v1/fondos/{proxy+}",
                 "method": "any",
-                "cors": {
-                  "origin": "*",
-                  "methods": [
-                    "OPTIONS",
-                    "ANY"
-                  ],
-                  "headers": [
-                    "Content-Type",
-                    "X-Amz-Date",
-                    "Authorization",
-                    "X-Api-Key",
-                    "X-Amz-Security-Token",
-                    "X-Amz-User-Agent",
-                    "X-Amzn-Trace-Id"
-                  ],
-                  "allowCredentials": "<REDACTED>"
-                },
-                "integration": "AWS_PROXY"
-              }
-            },
-            {
-              "http": {
-                "path": "api/v1/usuarios/login",
-                "method": "any",
-                "cors": {
-                  "origin": "*",
-                  "methods": [
-                    "OPTIONS",
-                    "ANY"
-                  ],
-                  "headers": [
-                    "Content-Type",
-                    "X-Amz-Date",
-                    "Authorization",
-                    "X-Api-Key",
-                    "X-Amz-Security-Token",
-                    "X-Amz-User-Agent",
-                    "X-Amzn-Trace-Id"
-                  ],
-                  "allowCredentials": "<REDACTED>"
-                },
-                "integration": "AWS_PROXY"
-              }
-            },
-            {
-              "http": {
-                "path": "api/v1/transaciones/{proxy+}",
-                "method": "any",
-                "cors": {
-                  "origin": "*",
-                  "methods": [
-                    "OPTIONS",
-                    "ANY"
-                  ],
-                  "headers": [
-                    "Content-Type",
-                    "X-Amz-Date",
-                    "Authorization",
-                    "X-Api-Key",
-                    "X-Amz-Security-Token",
-                    "X-Amz-User-Agent",
-                    "X-Amzn-Trace-Id"
-                  ],
-                  "allowCredentials": "<REDACTED>"
-                },
+                "path": "{proxy+}",
                 "integration": "AWS_PROXY"
               }
             }
@@ -1786,7 +928,7 @@
         }
       }
     },
-    "serviceRawFile": "service: backend-btg-angular\r\n\r\nuseDotenv: true\r\n\r\nplugins:\r\n  - serverless-offline\r\n\r\ncustom:\r\n  webpack:\r\n    includeModules: false\r\n\r\npackage:\r\n  exclude:\r\n    - node_modules/**\r\n    - .git/**\r\n    - tests/**\r\n    - docs/**\r\n  \r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n  apiGateway:\r\n    minimumCompressionSize: 1024\r\n  architecture: arm64\r\n  region: us-east-2\r\n  memorySize: 1024\r\n  logRetentionInDays: 1\r\n  timeout: 30\r\n  environment:\r\n    DATABASE_URL: ${env:DATABASE_URL}\r\n\r\n\r\nfunctions:\r\n  main:\r\n    handler: dist/lambda.handler\r\n    layers:\r\n      - arn:aws:lambda:us-east-2:992382560327:layer:nodeModulesLayer:2\r\n    events:\r\n      - http:\r\n          path: api/v1/usuarios/{proxy+}  # Rutas de usuarios\r\n          method: any\r\n          cors: true\r\n      - http:\r\n          path: api/v1/fondos/{proxy+}    # Rutas de fondos\r\n          method: any\r\n          cors: true\r\n      - http:\r\n          path: api/v1/usuarios/login    # Rutas de fondos\r\n          method: any\r\n          cors: true          \r\n      - http:\r\n          path: api/v1/transaciones/{proxy+} # Rutas de transacciones\r\n          method: any\r\n          cors: true\r\n\r\n\r\n\r\n",
+    "serviceRawFile": "service: backend-btg-angular\r\n\r\nuseDotenv: true\r\n\r\nplugins:\r\n  - serverless-offline\r\n\r\ncustom:\r\n  webpack:\r\n    includeModules: false\r\n\r\npackage:\r\n  exclude:\r\n    - node_modules/**\r\n    - .git/**\r\n    - tests/**\r\n    - docs/**\r\n  \r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n  apiGateway:\r\n    minimumCompressionSize: 1024\r\n  architecture: arm64\r\n  region: us-east-2\r\n  memorySize: 1024\r\n  logRetentionInDays: 1\r\n  timeout: 30\r\n  environment:\r\n    DATABASE_URL: ${env:DATABASE_URL}\r\n\r\n\r\nfunctions:\r\n  main:\r\n    handler: dist/lambda.handler\r\n    layers:\r\n      - arn:aws:lambda:us-east-2:992382560327:layer:nodeModulesLayer:2\r\n    events:\r\n      - http:\r\n          method: ANY\r\n          path: /api/v1\r\n      - http:\r\n          method: ANY\r\n          path: '{proxy+}'\r\n\r\n\r\n\r\n",
     "command": [
       "deploy"
     ],
@@ -1824,7 +966,7 @@
     "serviceUniqueId": "arn:aws:cloudformation:us-east-2:992382560327:stack/backend-btg-angular-prod/fec31b90-9af1-11ef-ada1-02e72a880d0d",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-2:992382560327:stack/backend-btg-angular-prod/fec31b90-9af1-11ef-ada1-02e72a880d0d",
     "serviceProviderAwsCfStackCreated": "2024-11-04T21:16:02.498Z",
-    "serviceProviderAwsCfStackUpdated": "2024-11-06T17:28:14.758Z",
+    "serviceProviderAwsCfStackUpdated": "2024-11-08T05:42:40.181Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {

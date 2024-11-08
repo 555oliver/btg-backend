@@ -37,21 +37,11 @@ functions:
       - arn:aws:lambda:us-east-2:992382560327:layer:nodeModulesLayer:2
     events:
       - http:
-          path: api/v1/usuarios/{proxy+}  # Rutas de usuarios
-          method: any
-          cors: true
+          method: ANY
+          path: /api/v1
       - http:
-          path: api/v1/fondos/{proxy+}    # Rutas de fondos
-          method: any
-          cors: true
-      - http:
-          path: api/v1/usuarios/login    # Rutas de fondos
-          method: any
-          cors: true          
-      - http:
-          path: api/v1/transaciones/{proxy+} # Rutas de transacciones
-          method: any
-          cors: true
+          method: ANY
+          path: '{proxy+}'
 
 
 
